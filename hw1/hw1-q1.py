@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 
 import utils
 
+IMAGE_PATH = "./images"
+IMAGE_NAME = "new_image"
 
 class LinearModel(object):
     def __init__(self, n_classes, n_features, **kwargs):
@@ -98,17 +100,19 @@ def plot(epochs, train_accs, val_accs):
     plt.plot(epochs, train_accs, label='train')
     plt.plot(epochs, val_accs, label='validation')
     plt.legend()
-    plt.show()
+    plt.savefig(f"{IMAGE_PATH}/{IMAGE_NAME}_accuracy.png", bbox_inches = 'tight')
 
 def plot_loss(epochs, loss):
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.plot(epochs, loss, label='train')
     plt.legend()
-    plt.show()
+    plt.savefig(f"{IMAGE_PATH}/{IMAGE_NAME}_loss.png", bbox_inches = 'tight')
 
 
 def main():
+    global IMAGE_PATH, IMAGE_NAME
+
     parser = argparse.ArgumentParser()
     parser.add_argument('model',
                         choices=['perceptron', 'logistic_regression', 'mlp'],
@@ -122,7 +126,14 @@ def main():
     parser.add_argument('-learning_rate', type=float, default=0.001,
                         help="""Learning rate for parameter updates (needed for
                         logistic regression and MLP, but not perceptron)""")
+    parser.add_argument('-image_path', type=str, default=IMAGE_PATH,
+                        help="""The path which you want to save the generated plot""")
+    parser.add_argument('-image_name', type=str, default=IMAGE_NAME,
+                        help="""The name which you want to name the generated image""")
     opt = parser.parse_args()
+
+    IMAGE_PATH = opt.image_path
+    IMAGE_NAME = opt.image_name
 
     utils.configure_seed(seed=42)
 
