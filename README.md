@@ -4,6 +4,9 @@ DeepLearning 23/24 homeworks
 to execute:
 python3 hw1-q1.py <model_name> -<flags> 
 
+example:
+python3 hw1-q1.py logistic_regression -epochs 50 -learning_rate 0.01 -image_path "images" -image_name "logistic_regression_0_01" > outputs/logistic_regression.out
+
 Models names:
 > perceptron
 > logistic_regression
