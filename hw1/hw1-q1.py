@@ -12,6 +12,12 @@ import utils
 IMAGE_PATH = "./images"
 IMAGE_NAME = "new_image"
 
+DEBUG = 0
+def debug(text):
+    global DEBUG
+    if (DEBUG):
+        print(text)
+
 class LinearModel(object):
     def __init__(self, n_classes, n_features, **kwargs):
         self.W = np.zeros((n_classes, n_features))
@@ -56,11 +62,12 @@ class Perceptron(LinearModel):
 class LogisticRegression(LinearModel):
     def update_weight(self, x_i, y_i, learning_rate=0.001):
         """
-        x_i (n_features): a single training example
-        y_i: the gold label for that example
+        x_i (1 x n_features): a single training example
+        y_i (integer): the gold label for that example
         learning_rate (float): keep it at the default value for your plots
         """
-        # Get probability scores according to the model (num_labels x 1).
+        # Get probability scores according to the model 
+        #   (num_labels x 1).
         label_scores = np.expand_dims(self.W.dot(x_i), axis = 1)
 
         # One-hot encode true label (num_labels x 1).
@@ -68,10 +75,13 @@ class LogisticRegression(LinearModel):
         y_one_hot[y_i] = 1
 
         # Softmax function
-        # This gives the label probabilities according to the model (num_labels x 1).
+        # This gives the label probabilities according to the model 
+        #   (num_labels x 1).
         label_probabilities = np.exp(label_scores) / np.sum(np.exp(label_scores))
         
-        # SGD update. W is num_labels x num_features.
+        # SGD update. W is (num_labels x num_features).
+        # NOTE: [[1, 2, 3]] is a (1 x 3) matrix BUT [1, 2, 3] is only a vector
+        #   dot() function have different behavior between them.
         self.W += learning_rate * (y_one_hot - label_probabilities).dot(np.expand_dims(x_i, axis = 1).T)
 
 
@@ -81,13 +91,31 @@ class MLP(object):
     # in main().
     def __init__(self, n_classes, n_features, hidden_size):
         # Initialize an MLP with a single hidden layer.
-        raise NotImplementedError
+        units = [n_features, hidden_size, n_classes]
+
+        # NOTE: input is  not included
+        self.layers = 2
+        self.g = [lambda x: x, lambda x: np.maximum(0, x), lambda x: x] # activation functions
+        self.deriv_g = [np.vectorize(lambda x: 1), np.vectorize(lambda x: 1 if x > 0 else 0), np.vectorize(lambda x: 1)] # derivate of activation functions
+
+        mu, sigma = 0.1, 0.1 # mean and standard deviation
+        self.W = ["empty"] + [np.random.normal(mu, sigma, size = (b, a)) 
+                    for a, b in zip(units[:-1], units[1:])]
+        self.b = ["empty"] + [np.zeros(a) for a in units[1:]]
 
     def predict(self, X):
+        """
+        X (n_examples x n_features)
+        """
         # Compute the forward pass of the network. At prediction time, there is
         # no need to save the values of hidden nodes, whereas this is required
         # at training time.
-        raise NotImplementedError
+        prediction = []
+        for x in X:
+            output, _ = self.forward(x)
+            prediction.append(np.argmax(output))
+
+        return prediction
 
     def evaluate(self, X, y):
         """
@@ -100,11 +128,109 @@ class MLP(object):
         n_possible = y.shape[0]
         return n_correct / n_possible
 
-    def train_epoch(self, X, y, learning_rate=0.001):
+    def train_epoch(self, X, y, learning_rate=0.001, **kwargs):
         """
-        Dont forget to return the loss of the epoch.
+        X (n_examples x n_features)
         """
-        raise NotImplementedError
+        total_loss = 0
+        for x_i, y_i in zip(X, y):
+            #debug(total_loss)
+            loss = self.update_weight(x_i, y_i, learning_rate)
+            total_loss += loss
+
+        return total_loss
+    
+    def update_weight(self, x, y, eta):
+        y_one_hot = np.zeros((np.size(self.W[self.layers], 0), 1))
+        y_one_hot[y] = 1
+        # Compute forward pass
+        y_hat, h = self.forward(x)
+        # Compute Loss and Update total loss
+        loss = self.compute_loss(y_hat, y_one_hot)
+        
+        # Compute backpropagation
+        grad_weights, grad_biases = self.backward(y_one_hot, y_hat, h)
+        # Update weights
+        for i in range(1, self.layers + 1):
+            self.W[i] -= eta*grad_weights[i]
+            self.b[i] -= eta*np.reshape(grad_biases[i], (1, np.size(grad_biases[i], 0)))[0]
+        
+        return loss
+
+    def compute_loss(self, y_hat, y):
+        """
+        y_hat (n classes x 1): prediction
+        y (n classes x 1): gold labels
+        """
+        # Cross Entropy Loss
+        #debug("")
+        #debug(F"COMPUTE LOSS")
+        #debug(f"y_hat: {y_hat}")
+        probs = np.exp(y_hat) / np.sum(np.exp(y_hat))
+        #debug(f"probs: {probs}")
+        #debug(f"log probs: {np.log(probs)}")
+        #debug(f"y: {y}")
+        loss = -np.dot(y.T, np.log(probs))
+
+        #debug(f"loss: {loss}")
+        #debug(F"COMPUTE LOSS")
+        return loss[0]
+
+    def forward(self, x):
+        # compute hidden layers
+        h = [x]
+
+        for i in range(1, self.layers + 1):
+            #debug(f"<<<<< FORWARD {i}>>>>>")
+            #debug(f"W[i]: {self.W[i]}")
+            #debug(f"list W[i]: {list(self.W[i][0])}")
+            #debug(f"b[i]: {self.b[i]}")
+            #debug(f"h[i-1]: {h[i-1]}")
+            z = self.W[i].dot(h[i-1]) + self.b[i]
+            #debug(f"z: {z}")
+            h.append(self.g[i](z))
+            #debug(f"self.g[i](z) : {self.g[i](z)}")
+        #debug("<<<<< FORWARD END >>>>>")
+        return z, h
+
+    def backward(self, y, y_hat, h):
+        """
+        y_hat (1 x n classes): predictions
+        y (n classes x 1): gold labels
+        """
+        #debug(f"<<<<< BACKWARD >>>>>")
+        grad_weights = []
+        grad_biases = []
+        grad_h = [i for i in range(self.layers + 1)]
+        grad_z = [i for i in range(self.layers + 1)]
+
+        y_hat = np.expand_dims(y_hat, axis = 1)
+        #debug(f"y_hat: {y_hat}")
+        softmax = np.exp(y_hat) / np.sum(np.exp(y_hat))
+        #debug(f"softmax: {softmax}")
+        #debug(f"y: {y}")
+        grad_z[self.layers] = softmax - y
+        #debug(f"grad_z[self.layers]: {grad_z[self.layers]}")
+
+        for i in range(self.layers, 0, -1):
+            #debug(f"<<<<< BACKWARD LOOP {i} >>>>>")
+            grad_h[i-1] = np.dot(self.W[i].T, grad_z[i])
+            if i < self.layers:
+                ##debug(h[i])
+                #debug(f">>>>>>>>>>>>>>>>> DERIVATE: {self.deriv_g[i](np.expand_dims(h[i], axis = 1))}")
+                #debug(f"grad_h[i]: {grad_h[i]}")
+                grad_z[i] = grad_h[i]*self.deriv_g[i](np.expand_dims(h[i], axis = 1))
+                
+            #debug(f"grad_z[i]: {grad_z[i]}")
+            #debug(f"h[i-1]: {h[i-1]}")
+            grad_weights = [np.dot(grad_z[i],  np.expand_dims(h[i-1], axis = 0))] + grad_weights
+            #debug(f"grad_weights[i]: {np.dot(grad_z[i],  np.expand_dims(h[i-1], axis = 0))}")
+            grad_biases = [grad_z[i]] + grad_biases
+        
+        grad_weights = ["empty"] + grad_weights
+        grad_biases = ["empty"] + grad_biases
+        #debug(f"<<<<< BACKWARD END >>>>>")
+        return grad_weights, grad_biases
 
 
 def plot(epochs, train_accs, val_accs):
