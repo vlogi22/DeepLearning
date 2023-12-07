@@ -11,6 +11,8 @@ from matplotlib import pyplot as plt
 
 import utils
 
+IMAGE_PATH = "./images"
+IMAGE_NAME = "new_image"
 
 # Q2.1
 class LogisticRegression(nn.Module):
@@ -136,10 +138,12 @@ def plot(epochs, plottables, name='', ylim=None):
     plt.legend()
     if ylim:
         plt.ylim(ylim)
-    plt.savefig('%s.pdf' % (name), bbox_inches='tight')
+    plt.savefig(f"{IMAGE_PATH}/{IMAGE_NAME}_{name}.png", bbox_inches = 'tight')
 
 
 def main():
+    global IMAGE_PATH, IMAGE_NAME
+
     parser = argparse.ArgumentParser()
     parser.add_argument('model',
                         choices=['logistic_regression', 'mlp'],
@@ -158,7 +162,14 @@ def main():
                         choices=['tanh', 'relu'], default='relu')
     parser.add_argument('-optimizer',
                         choices=['sgd', 'adam'], default='sgd')
+    parser.add_argument('-image_path', type=str, default=IMAGE_PATH,
+                        help="""The path which you want to save the generated plot""")
+    parser.add_argument('-image_name', type=str, default=IMAGE_NAME,
+                        help="""The name which you want to name the generated image""")
     opt = parser.parse_args()
+
+    IMAGE_PATH = opt.image_path
+    IMAGE_NAME = opt.image_name
 
     utils.configure_seed(seed=42)
 
@@ -204,7 +215,7 @@ def main():
     valid_losses = []
     valid_accs = []
     for ii in epochs:
-        print('Training epoch {}'.format(ii))
+        print('>> Training epoch {}'.format(ii))
         epoch_train_losses = []
         for X_batch, y_batch in train_dataloader:
             loss = train_batch(
@@ -247,9 +258,9 @@ def main():
         ylim = (0., 1.2)
     else:
         raise ValueError(f"Unknown model {opt.model}")
-    plot(epochs, losses, name=f'{opt.model}-training-loss-{config}', ylim=ylim)
+    plot(epochs, losses, name=f'training_loss_{config}', ylim=ylim)
     accuracy = { "Valid Accuracy": valid_accs }
-    plot(epochs, accuracy, name=f'{opt.model}-validation-accuracy-{config}', ylim=(0., 1.))
+    plot(epochs, accuracy, name=f'validation_accuracy_{config}', ylim=(0., 1.))
 
 
 if __name__ == '__main__':
