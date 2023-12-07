@@ -12,12 +12,6 @@ import utils
 IMAGE_PATH = "./images"
 IMAGE_NAME = "new_image"
 
-DEBUG = 0
-def debug(text):
-    global DEBUG
-    if (DEBUG):
-        print(text)
-
 class LinearModel(object):
     def __init__(self, n_classes, n_features, **kwargs):
         self.W = np.zeros((n_classes, n_features))
@@ -131,7 +125,6 @@ class MLP(object):
         """
         total_loss = 0
         for x_i, y_i in zip(X, y):
-            #debug(total_loss)
             loss = self.update_weight(x_i, y_i, learning_rate)
             total_loss += loss
 
@@ -160,18 +153,9 @@ class MLP(object):
         y (n classes x 1): gold labels
         """
         # Cross Entropy Loss
-        #debug("")
-        #debug(F"COMPUTE LOSS")
-        #debug(f"y_hat: {y_hat}")
         y_hat = y_hat - np.max(y_hat) #To fix overflow
         probs = np.exp(y_hat) / np.sum(np.exp(y_hat))
-        #debug(f"probs: {probs}")
-        #debug(f"log probs: {np.log(probs)}")
-        #debug(f"y: {y}")
         loss = -np.dot(y.T, np.log(probs))
-
-        #debug(f"loss: {loss}")
-        #debug(F"COMPUTE LOSS")
         return loss[0]
 
     def forward(self, x):
@@ -179,16 +163,8 @@ class MLP(object):
         h = [x]
 
         for i in range(1, self.layers + 1):
-            #debug(f"<<<<< FORWARD {i}>>>>>")
-            #debug(f"W[i]: {self.W[i]}")
-            #debug(f"list W[i]: {list(self.W[i][0])}")
-            #debug(f"b[i]: {self.b[i]}")
-            #debug(f"h[i-1]: {h[i-1]}")
             z = self.W[i].dot(h[i-1]) + self.b[i]
-            #debug(f"z: {z}")
             h.append(self.g[i](z))
-            #debug(f"self.g[i](z) : {self.g[i](z)}")
-        #debug("<<<<< FORWARD END >>>>>")
         return z, h
 
     def backward(self, y, y_hat, h):
@@ -196,40 +172,25 @@ class MLP(object):
         y_hat (1 x n classes): predictions
         y (n classes x 1): gold labels
         """
-        #debug(f"<<<<< BACKWARD >>>>>")
         grad_weights = []
         grad_biases = []
         grad_h = [i for i in range(self.layers + 1)]
         grad_z = [i for i in range(self.layers + 1)]
 
-
         y_hat = y_hat - np.max(y_hat) #To fix overflow
         y_hat = np.expand_dims(y_hat, axis = 1)
-        #debug(f"y_hat: {y_hat}")
         softmax = np.exp(y_hat) / np.sum(np.exp(y_hat))
-        #debug(f"softmax: {softmax}")
-        #debug(f"y: {y}")
         grad_z[self.layers] = softmax - y
-        #debug(f"grad_z[self.layers]: {grad_z[self.layers]}")
 
         for i in range(self.layers, 0, -1):
-            #debug(f"<<<<< BACKWARD LOOP {i} >>>>>")
             grad_h[i-1] = np.dot(self.W[i].T, grad_z[i])
             if i < self.layers:
-                ##debug(h[i])
-                #debug(f">>>>>>>>>>>>>>>>> DERIVATE: {self.deriv_g[i](np.expand_dims(h[i], axis = 1))}")
-                #debug(f"grad_h[i]: {grad_h[i]}")
                 grad_z[i] = grad_h[i]*self.deriv_g[i](np.expand_dims(h[i], axis = 1))
-                
-            #debug(f"grad_z[i]: {grad_z[i]}")
-            #debug(f"h[i-1]: {h[i-1]}")
             grad_weights = [np.dot(grad_z[i],  np.expand_dims(h[i-1], axis = 0))] + grad_weights
-            #debug(f"grad_weights[i]: {np.dot(grad_z[i],  np.expand_dims(h[i-1], axis = 0))}")
             grad_biases = [grad_z[i]] + grad_biases
         
         grad_weights = ["empty"] + grad_weights
         grad_biases = ["empty"] + grad_biases
-        #debug(f"<<<<< BACKWARD END >>>>>")
         return grad_weights, grad_biases
 
 
