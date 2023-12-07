@@ -86,9 +86,6 @@ class LogisticRegression(LinearModel):
 
 
 class MLP(object):
-    # Q3.2b. This MLP skeleton code allows the MLP to be used in place of the
-    # linear models with no changes to the training loop or evaluation code
-    # in main().
     def __init__(self, n_classes, n_features, hidden_size):
         # Initialize an MLP with a single hidden layer.
         units = [n_features, hidden_size, n_classes]
@@ -96,7 +93,7 @@ class MLP(object):
         # NOTE: input is  not included
         self.layers = 2
         self.g = [lambda x: x, lambda x: np.maximum(0, x), lambda x: x] # activation functions
-        self.deriv_g = [np.vectorize(lambda x: 1), np.vectorize(lambda x: 1 if x > 0 else 0), np.vectorize(lambda x: 1)] # derivate of activation functions
+        self.deriv_g = [np.vectorize(lambda x: 1), np.vectorize(lambda x: x > 0), np.vectorize(lambda x: 1)] # derivate of activation functions
 
         mu, sigma = 0.1, 0.1 # mean and standard deviation
         self.W = ["empty"] + [np.random.normal(mu, sigma, size = (b, a)) 
@@ -166,6 +163,7 @@ class MLP(object):
         #debug("")
         #debug(F"COMPUTE LOSS")
         #debug(f"y_hat: {y_hat}")
+        y_hat = y_hat - np.max(y_hat) #To fix overflow
         probs = np.exp(y_hat) / np.sum(np.exp(y_hat))
         #debug(f"probs: {probs}")
         #debug(f"log probs: {np.log(probs)}")
@@ -204,6 +202,8 @@ class MLP(object):
         grad_h = [i for i in range(self.layers + 1)]
         grad_z = [i for i in range(self.layers + 1)]
 
+
+        y_hat = y_hat - np.max(y_hat) #To fix overflow
         y_hat = np.expand_dims(y_hat, axis = 1)
         #debug(f"y_hat: {y_hat}")
         softmax = np.exp(y_hat) / np.sum(np.exp(y_hat))
