@@ -14,6 +14,8 @@ import utils
 IMAGE_PATH = "./images"
 IMAGE_NAME = "new_image"
 
+#DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 # Q2.1
 class LogisticRegression(nn.Module):
 
@@ -28,9 +30,8 @@ class LogisticRegression(nn.Module):
         pytorch to make weights and biases, have a look at
         https://pytorch.org/docs/stable/nn.html
         """
-        super().__init__()
+        super(LogisticRegression, self).__init__()
         self.layer = nn.Linear(n_features, n_classes)
-        self.activation = nn.Sigmoid()
 
     def forward(self, x, **kwargs):
         """
@@ -47,8 +48,7 @@ class LogisticRegression(nn.Module):
         backward pass.
         """
         Z = self.layer(x)
-        P = self.activation(Z)
-        return P
+        return Z
 
 # Q2.2
 class FeedforwardNetwork(nn.Module):
@@ -67,14 +67,15 @@ class FeedforwardNetwork(nn.Module):
         attributes that each FeedforwardNetwork instance has. Note that nn
         includes modules for several activation functions and dropout as well.
         """
-        super().__init__()
+        super(FeedforwardNetwork, self).__init__()
         self.sizes = [n_features] + [hidden_size for _ in range(layers - 1)] + [n_classes]
-        self.layers = [nn.Linear(a, b) for a, b in zip(self.sizes[:-1], self.sizes[1:])]
+        self.hidden_layers = nn.ModuleList([nn.Linear(a, b) for a, b in zip(self.sizes[:-2], self.sizes[1:-1])])
+        self.output_layer = nn.Linear(self.sizes[-2], self.sizes[-1])
         
         self.activation_type = nn.ReLU() if (activation_type == 'relu') else nn.Tanh()
-        self.dropout = dropout
+        self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x, **kwargs):
+    def forward(self, X, **kwargs):
         """
         x (batch_size x n_features): a batch of training examples
 
@@ -82,7 +83,12 @@ class FeedforwardNetwork(nn.Module):
         the output logits from x. This will include using various hidden
         layers, pointwise nonlinear functions, and dropout.
         """
-        raise NotImplementedError
+        for layer in self.hidden_layers:
+            X = layer(X)
+            X = self.activation_type(X)
+            X = self.dropout(X)
+        X = self.output_layer(X)
+        return X
 
 
 def train_batch(X, y, model, optimizer, criterion, **kwargs):
@@ -103,8 +109,9 @@ def train_batch(X, y, model, optimizer, criterion, **kwargs):
     This function should return the loss (tip: call loss.item()) to get the
     loss as a numerical value that is not part of the computation graph.
     """
-    optimizer.zero_grad() # sets the gradients "to zero".
+    model.train()
 
+    optimizer.zero_grad() # sets the gradients "to zero".
     y_hat = model(X)
     loss = criterion(y_hat, y)
 
