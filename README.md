@@ -9,12 +9,10 @@ Q1.1(b)
 python3 hw1-q1.py logistic_regression -epochs 50 -learning_rate 0.01 -image_path "images" -image_name "logistic_regression_0_01" > outputs/logistic_regression.out
 
 <b>Q2.1</b>
-python3 hw1-q2.py logistic_regression -epochs 20 -batch_size 16 -learning
-_rate 0.1 -image_path "images" -image_name "Q2_logistic_regression_0_1"
+python3 hw1-q2.py logistic_regression -epochs 20 -batch_size 16 -learning_rate 0.1 -image_path "images" -image_name "Q2_logistic_regression_0_1"
 
 <b>Q2.2</b>
-python3 hw1-q2.py mlp -epochs 20 -batch_size 16 -learning
-_rate 0.1 -hidden_size 200 -layers 2 -dropout 0.0 -activation relu -optimizer sgd -image_path "images" -image_name "Q2_mlp_0_1"
+python3 hw1-q2.py mlp -epochs 20 -batch_size 16 -learning_rate 0.1 -hidden_size 200 -layers 2 -dropout 0.0 -l2_decay 0.0 -activation relu -optimizer sgd -image_path "images" -image_name "Q2_mlp_0_1"
 
 <b>Models names:</b>
 \> perceptron
