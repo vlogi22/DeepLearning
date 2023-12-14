@@ -1,0 +1,451 @@
+>> Training epoch 1
+Training loss: 1.1339
+Valid acc: 0.5739
+>> Training epoch 2
+Training loss: 1.0517
+Valid acc: 0.6234
+>> Training epoch 3
+Training loss: 0.9943
+Valid acc: 0.6465
+>> Training epoch 4
+Training loss: 0.9549
+Valid acc: 0.6494
+>> Training epoch 5
+Training loss: 0.9210
+Valid acc: 0.5733
+>> Training epoch 6
+Training loss: 0.8866
+Valid acc: 0.6945
+>> Training epoch 7
+Training loss: 0.8487
+Valid acc: 0.6926
+>> Training epoch 8
+Training loss: 0.8141
+Valid acc: 0.7098
+>> Training epoch 9
+Training loss: 0.7799
+Valid acc: 0.7333
+>> Training epoch 10
+Training loss: 0.7587
+Valid acc: 0.7465
+>> Training epoch 11
+Training loss: 0.7400
+Valid acc: 0.7443
+>> Training epoch 12
+Training loss: 0.7147
+Valid acc: 0.7541
+>> Training epoch 13
+Training loss: 0.6981
+Valid acc: 0.7273
+>> Training epoch 14
+Training loss: 0.6860
+Valid acc: 0.7591
+>> Training epoch 15
+Training loss: 0.6711
+Valid acc: 0.7772
+>> Training epoch 16
+Training loss: 0.6611
+Valid acc: 0.7798
+>> Training epoch 17
+Training loss: 0.6456
+Valid acc: 0.7822
+>> Training epoch 18
+Training loss: 0.6376
+Valid acc: 0.7630
+>> Training epoch 19
+Training loss: 0.6288
+Valid acc: 0.7713
+>> Training epoch 20
+Training loss: 0.6199
+Valid acc: 0.7977
+>> Training epoch 21
+Training loss: 0.6153
+Valid acc: 0.7948
+>> Training epoch 22
+Training loss: 0.6065
+Valid acc: 0.8018
+>> Training epoch 23
+Training loss: 0.5966
+Valid acc: 0.8023
+>> Training epoch 24
+Training loss: 0.5965
+Valid acc: 0.8017
+>> Training epoch 25
+Training loss: 0.5833
+Valid acc: 0.7900
+>> Training epoch 26
+Training loss: 0.5808
+Valid acc: 0.8036
+>> Training epoch 27
+Training loss: 0.5778
+Valid acc: 0.8078
+>> Training epoch 28
+Training loss: 0.5695
+Valid acc: 0.8044
+>> Training epoch 29
+Training loss: 0.5671
+Valid acc: 0.7929
+>> Training epoch 30
+Training loss: 0.5628
+Valid acc: 0.7916
+>> Training epoch 31
+Training loss: 0.5562
+Valid acc: 0.8103
+>> Training epoch 32
+Training loss: 0.5524
+Valid acc: 0.8034
+>> Training epoch 33
+Training loss: 0.5480
+Valid acc: 0.8166
+>> Training epoch 34
+Training loss: 0.5475
+Valid acc: 0.8131
+>> Training epoch 35
+Training loss: 0.5397
+Valid acc: 0.8141
+>> Training epoch 36
+Training loss: 0.5373
+Valid acc: 0.8111
+>> Training epoch 37
+Training loss: 0.5349
+Valid acc: 0.8108
+>> Training epoch 38
+Training loss: 0.5322
+Valid acc: 0.8203
+>> Training epoch 39
+Training loss: 0.5283
+Valid acc: 0.8165
+>> Training epoch 40
+Training loss: 0.5257
+Valid acc: 0.8189
+>> Training epoch 41
+Training loss: 0.5195
+Valid acc: 0.8161
+>> Training epoch 42
+Training loss: 0.5200
+Valid acc: 0.8203
+>> Training epoch 43
+Training loss: 0.5136
+Valid acc: 0.8251
+>> Training epoch 44
+Training loss: 0.5115
+Valid acc: 0.8248
+>> Training epoch 45
+Training loss: 0.5097
+Valid acc: 0.8153
+>> Training epoch 46
+Training loss: 0.5052
+Valid acc: 0.8190
+>> Training epoch 47
+Training loss: 0.5033
+Valid acc: 0.8275
+>> Training epoch 48
+Training loss: 0.4988
+Valid acc: 0.8133
+>> Training epoch 49
+Training loss: 0.4991
+Valid acc: 0.8246
+>> Training epoch 50
+Training loss: 0.4973
+Valid acc: 0.8224
+>> Training epoch 51
+Training loss: 0.4925
+Valid acc: 0.8269
+>> Training epoch 52
+Training loss: 0.4919
+Valid acc: 0.8262
+>> Training epoch 53
+Training loss: 0.4879
+Valid acc: 0.8188
+>> Training epoch 54
+Training loss: 0.4867
+Valid acc: 0.8325
+>> Training epoch 55
+Training loss: 0.4834
+Valid acc: 0.8280
+>> Training epoch 56
+Training loss: 0.4827
+Valid acc: 0.8215
+>> Training epoch 57
+Training loss: 0.4803
+Valid acc: 0.8240
+>> Training epoch 58
+Training loss: 0.4787
+Valid acc: 0.8294
+>> Training epoch 59
+Training loss: 0.4758
+Valid acc: 0.8287
+>> Training epoch 60
+Training loss: 0.4739
+Valid acc: 0.8324
+>> Training epoch 61
+Training loss: 0.4710
+Valid acc: 0.8203
+>> Training epoch 62
+Training loss: 0.4723
+Valid acc: 0.8164
+>> Training epoch 63
+Training loss: 0.4697
+Valid acc: 0.8253
+>> Training epoch 64
+Training loss: 0.4678
+Valid acc: 0.8371
+>> Training epoch 65
+Training loss: 0.4628
+Valid acc: 0.8332
+>> Training epoch 66
+Training loss: 0.4610
+Valid acc: 0.8250
+>> Training epoch 67
+Training loss: 0.4616
+Valid acc: 0.8285
+>> Training epoch 68
+Training loss: 0.4574
+Valid acc: 0.8367
+>> Training epoch 69
+Training loss: 0.4549
+Valid acc: 0.8307
+>> Training epoch 70
+Training loss: 0.4568
+Valid acc: 0.8311
+>> Training epoch 71
+Training loss: 0.4547
+Valid acc: 0.8391
+>> Training epoch 72
+Training loss: 0.4515
+Valid acc: 0.8355
+>> Training epoch 73
+Training loss: 0.4515
+Valid acc: 0.8309
+>> Training epoch 74
+Training loss: 0.4465
+Valid acc: 0.8295
+>> Training epoch 75
+Training loss: 0.4487
+Valid acc: 0.8354
+>> Training epoch 76
+Training loss: 0.4472
+Valid acc: 0.8268
+>> Training epoch 77
+Training loss: 0.4441
+Valid acc: 0.8397
+>> Training epoch 78
+Training loss: 0.4432
+Valid acc: 0.8327
+>> Training epoch 79
+Training loss: 0.4409
+Valid acc: 0.8394
+>> Training epoch 80
+Training loss: 0.4398
+Valid acc: 0.8371
+>> Training epoch 81
+Training loss: 0.4388
+Valid acc: 0.8343
+>> Training epoch 82
+Training loss: 0.4366
+Valid acc: 0.8368
+>> Training epoch 83
+Training loss: 0.4344
+Valid acc: 0.8396
+>> Training epoch 84
+Training loss: 0.4335
+Valid acc: 0.8449
+>> Training epoch 85
+Training loss: 0.4331
+Valid acc: 0.8382
+>> Training epoch 86
+Training loss: 0.4323
+Valid acc: 0.8363
+>> Training epoch 87
+Training loss: 0.4308
+Valid acc: 0.8332
+>> Training epoch 88
+Training loss: 0.4295
+Valid acc: 0.8436
+>> Training epoch 89
+Training loss: 0.4266
+Valid acc: 0.8411
+>> Training epoch 90
+Training loss: 0.4241
+Valid acc: 0.8323
+>> Training epoch 91
+Training loss: 0.4236
+Valid acc: 0.8397
+>> Training epoch 92
+Training loss: 0.4226
+Valid acc: 0.8431
+>> Training epoch 93
+Training loss: 0.4214
+Valid acc: 0.8402
+>> Training epoch 94
+Training loss: 0.4211
+Valid acc: 0.8473
+>> Training epoch 95
+Training loss: 0.4188
+Valid acc: 0.8422
+>> Training epoch 96
+Training loss: 0.4190
+Valid acc: 0.8440
+>> Training epoch 97
+Training loss: 0.4174
+Valid acc: 0.8441
+>> Training epoch 98
+Training loss: 0.4169
+Valid acc: 0.8464
+>> Training epoch 99
+Training loss: 0.4129
+Valid acc: 0.8495
+>> Training epoch 100
+Training loss: 0.4133
+Valid acc: 0.8453
+>> Training epoch 101
+Training loss: 0.4111
+Valid acc: 0.8428
+>> Training epoch 102
+Training loss: 0.4112
+Valid acc: 0.8487
+>> Training epoch 103
+Training loss: 0.4123
+Valid acc: 0.8474
+>> Training epoch 104
+Training loss: 0.4089
+Valid acc: 0.8441
+>> Training epoch 105
+Training loss: 0.4075
+Valid acc: 0.8443
+>> Training epoch 106
+Training loss: 0.4058
+Valid acc: 0.8479
+>> Training epoch 107
+Training loss: 0.4065
+Valid acc: 0.8471
+>> Training epoch 108
+Training loss: 0.4058
+Valid acc: 0.8475
+>> Training epoch 109
+Training loss: 0.4032
+Valid acc: 0.8439
+>> Training epoch 110
+Training loss: 0.4028
+Valid acc: 0.8480
+>> Training epoch 111
+Training loss: 0.4029
+Valid acc: 0.8493
+>> Training epoch 112
+Training loss: 0.3986
+Valid acc: 0.8501
+>> Training epoch 113
+Training loss: 0.4002
+Valid acc: 0.8430
+>> Training epoch 114
+Training loss: 0.3966
+Valid acc: 0.8469
+>> Training epoch 115
+Training loss: 0.3956
+Valid acc: 0.8480
+>> Training epoch 116
+Training loss: 0.3943
+Valid acc: 0.8397
+>> Training epoch 117
+Training loss: 0.3970
+Valid acc: 0.8392
+>> Training epoch 118
+Training loss: 0.3955
+Valid acc: 0.8477
+>> Training epoch 119
+Training loss: 0.3955
+Valid acc: 0.8542
+>> Training epoch 120
+Training loss: 0.3921
+Valid acc: 0.8512
+>> Training epoch 121
+Training loss: 0.3920
+Valid acc: 0.8491
+>> Training epoch 122
+Training loss: 0.3895
+Valid acc: 0.8465
+>> Training epoch 123
+Training loss: 0.3888
+Valid acc: 0.8483
+>> Training epoch 124
+Training loss: 0.3879
+Valid acc: 0.8523
+>> Training epoch 125
+Training loss: 0.3863
+Valid acc: 0.8564
+>> Training epoch 126
+Training loss: 0.3858
+Valid acc: 0.8538
+>> Training epoch 127
+Training loss: 0.3852
+Valid acc: 0.8496
+>> Training epoch 128
+Training loss: 0.3855
+Valid acc: 0.8541
+>> Training epoch 129
+Training loss: 0.3841
+Valid acc: 0.8532
+>> Training epoch 130
+Training loss: 0.3834
+Valid acc: 0.8559
+>> Training epoch 131
+Training loss: 0.3814
+Valid acc: 0.8506
+>> Training epoch 132
+Training loss: 0.3785
+Valid acc: 0.8495
+>> Training epoch 133
+Training loss: 0.3808
+Valid acc: 0.8528
+>> Training epoch 134
+Training loss: 0.3791
+Valid acc: 0.8564
+>> Training epoch 135
+Training loss: 0.3766
+Valid acc: 0.8483
+>> Training epoch 136
+Training loss: 0.3775
+Valid acc: 0.8553
+>> Training epoch 137
+Training loss: 0.3770
+Valid acc: 0.8525
+>> Training epoch 138
+Training loss: 0.3755
+Valid acc: 0.8548
+>> Training epoch 139
+Training loss: 0.3755
+Valid acc: 0.8449
+>> Training epoch 140
+Training loss: 0.3707
+Valid acc: 0.8432
+>> Training epoch 141
+Training loss: 0.3728
+Valid acc: 0.8504
+>> Training epoch 142
+Training loss: 0.3721
+Valid acc: 0.8573
+>> Training epoch 143
+Training loss: 0.3705
+Valid acc: 0.8461
+>> Training epoch 144
+Training loss: 0.3688
+Valid acc: 0.8542
+>> Training epoch 145
+Training loss: 0.3697
+Valid acc: 0.8480
+>> Training epoch 146
+Training loss: 0.3660
+Valid acc: 0.8558
+>> Training epoch 147
+Training loss: 0.3691
+Valid acc: 0.8537
+>> Training epoch 148
+Training loss: 0.3670
+Valid acc: 0.8579
+>> Training epoch 149
+Training loss: 0.3669
+Valid acc: 0.8510
+>> Training epoch 150
+Training loss: 0.3677
+Valid acc: 0.8537
+Final Test acc: 0.7940

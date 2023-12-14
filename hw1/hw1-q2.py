@@ -68,7 +68,7 @@ class FeedforwardNetwork(nn.Module):
         includes modules for several activation functions and dropout as well.
         """
         super(FeedforwardNetwork, self).__init__()
-        self.sizes = [n_features] + [hidden_size for _ in range(layers - 1)] + [n_classes]
+        self.sizes = [n_features] + [hidden_size for _ in range(layers)] + [n_classes]
         self.hidden_layers = nn.ModuleList([nn.Linear(a, b) for a, b in zip(self.sizes[:-2], self.sizes[1:-1])])
         self.output_layer = nn.Linear(self.sizes[-2], self.sizes[-1])
         

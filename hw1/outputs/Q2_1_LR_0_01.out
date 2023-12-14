@@ -1,0 +1,25 @@
+>> Training epoch 1
+Training loss: 1.0853
+Valid acc: 0.5987
+>> Training epoch 2
+Training loss: 0.9382
+Valid acc: 0.6684
+>> Training epoch 3
+Training loss: 0.8711
+Valid acc: 0.6922
+>> Training epoch 4
+Training loss: 0.7941
+Valid acc: 0.7271
+>> Training epoch 5
+Training loss: 0.7268
+Valid acc: 0.7313
+>> Training epoch 6
+Training loss: 0.6841
+Valid acc: 0.7627
+>> Training epoch 7
+Training loss: 0.6523
+Valid acc: 0.7741
+>> Training epoch 8
+Training loss: 0.6264
+Valid acc: 0.7692
+>> Training epoch 9
