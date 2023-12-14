@@ -123,12 +123,12 @@ class MLP(object):
         """
         X (n_examples x n_features)
         """
-        total_loss = 0
+        total_loss = np.array([])
         for x_i, y_i in zip(X, y):
             loss = self.update_weight(x_i, y_i, learning_rate)
-            total_loss += loss
+            total_loss = np.append(total_loss, loss)
 
-        return total_loss
+        return total_loss.mean()
     
     def update_weight(self, x, y, eta):
         y_one_hot = np.zeros((np.size(self.W[self.layers], 0), 1))
