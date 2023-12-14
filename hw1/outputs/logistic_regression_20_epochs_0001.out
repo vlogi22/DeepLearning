@@ -1,0 +1,41 @@
+Training epoch 1
+train acc: 0.6094 | val acc: 0.6067
+Training epoch 2
+train acc: 0.6312 | val acc: 0.6339
+Training epoch 3
+train acc: 0.6352 | val acc: 0.6369
+Training epoch 4
+train acc: 0.6407 | val acc: 0.6444
+Training epoch 5
+train acc: 0.6291 | val acc: 0.6262
+Training epoch 6
+train acc: 0.6444 | val acc: 0.6459
+Training epoch 7
+train acc: 0.6460 | val acc: 0.6464
+Training epoch 8
+train acc: 0.6493 | val acc: 0.6520
+Training epoch 9
+train acc: 0.6468 | val acc: 0.6484
+Training epoch 10
+train acc: 0.6516 | val acc: 0.6506
+Training epoch 11
+train acc: 0.6507 | val acc: 0.6514
+Training epoch 12
+train acc: 0.6539 | val acc: 0.6546
+Training epoch 13
+train acc: 0.6524 | val acc: 0.6496
+Training epoch 14
+train acc: 0.6553 | val acc: 0.6555
+Training epoch 15
+train acc: 0.6576 | val acc: 0.6581
+Training epoch 16
+train acc: 0.6555 | val acc: 0.6556
+Training epoch 17
+train acc: 0.6490 | val acc: 0.6483
+Training epoch 18
+train acc: 0.6512 | val acc: 0.6526
+Training epoch 19
+train acc: 0.6557 | val acc: 0.6574
+Training epoch 20
+train acc: 0.6564 | val acc: 0.6575
+Final test acc: 0.6068

@@ -195,6 +195,7 @@ class MLP(object):
 
 
 def plot(epochs, train_accs, val_accs):
+    plt.clf()
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.plot(epochs, train_accs, label='train')
@@ -203,6 +204,7 @@ def plot(epochs, train_accs, val_accs):
     plt.savefig(f"{IMAGE_PATH}/{IMAGE_NAME}_accuracy.png", bbox_inches = 'tight')
 
 def plot_loss(epochs, loss):
+    plt.clf()
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.plot(epochs, loss, label='train')
