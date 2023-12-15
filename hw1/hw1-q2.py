@@ -144,7 +144,7 @@ def evaluate(model, X, y, criterion):
     return loss, n_correct / n_possible
 
 
-def plot(epochs, plottables, name='', ylim=None):
+def plot(epochs, plottables, name='', y_label = '', ylim=None):
     """Plot the plottables over the epochs.
     
     Plottables is a dictionary mapping labels to lists of values.
@@ -156,6 +156,7 @@ def plot(epochs, plottables, name='', ylim=None):
     plt.legend()
     if ylim:
         plt.ylim(ylim)
+    plt.ylabel(y_label)
     plt.savefig(f"{IMAGE_PATH}/{IMAGE_NAME}_{name}.png", bbox_inches = 'tight')
 
 
@@ -276,9 +277,9 @@ def main():
         ylim = (0., 1.2)
     else:
         raise ValueError(f"Unknown model {opt.model}")
-    plot(epochs, losses, name=f'training_loss_{config}', ylim=ylim)
+    plot(epochs, losses, name=f'training_loss_{config}', y_label = "Loss", ylim=ylim)
     accuracy = { "Valid Accuracy": valid_accs }
-    plot(epochs, accuracy, name=f'validation_accuracy_{config}', ylim=(0., 1.))
+    plot(epochs, accuracy, name=f'validation_accuracy_{config}', y_label = "Accuracy", ylim=(0., 1.))
 
 
 if __name__ == '__main__':
