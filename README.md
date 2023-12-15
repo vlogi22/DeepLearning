@@ -6,7 +6,7 @@ python3 hw1-q1.py [model_name] -[flags]
 
 <b>example:</b>
 Q1.1(b)
-python3 hw1-q1.py logistic_regression -epochs 20 -learning_rate 0.01 -image_path "images" -image_name "logistic_regression_0_01" > outputs/logistic_regression.out
+python3 hw1-q1.py logistic_regression -epochs 50 -learning_rate 0.01 -image_path "images" -image_name "logistic_regression_50_epochs_0_01" > outputs/logistic_regression_50_epochs_0_01.out
 
 <b>Q2.1</b>
 python3 hw1-q2.py logistic_regression -epochs 20 -batch_size 16 -learning_rate 0.1 -image_path "images" -image_name "Q2_logistic_regression_0_1"
