@@ -30,3 +30,7 @@ python3 hw1-q2.py mlp -epochs 20 -batch_size 16 -learning_rate 0.1 -hidden_size 
 -dropout
 -activation 
 -optimizer
+
+
+
+python3 hw2-q2.py -epochs 15 -learning_rate 0.01 -image_path "images" -image_name "CNN_15_epochs_0_01" > outputs/CNN_15_epochs_0_01.out

@@ -18,47 +18,84 @@ import utils
 IMAGE_PATH = "./images"
 IMAGE_NAME = "new_image"
 
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
 class CNN(nn.Module):
     
     def __init__(self, dropout_prob, no_maxpool=False):
         super(CNN, self).__init__()
         self.no_maxpool = no_maxpool
-        if not no_maxpool:
-            # Implementation for Q2.1
-            raise NotImplementedError
-        else:
-            # Implementation for Q2.2
-            raise NotImplementedError
+        # NOTE: The image dimension is 28x28
+
+        if not no_maxpool: # Implementation for Q2.1
+            self.conv1 = nn.Conv2d(1, 8, kernel_size=3, stride=1, padding=1)
+            self.conv2 = nn.Conv2d(8, 16, kernel_size=3, stride=1, padding=0)
+            self.maxPool1 = nn.MaxPool2d(kernel_size=2, stride=2)
+            self.maxPool2 = nn.MaxPool2d(kernel_size=2, stride=2)
+        else: # Implementation for Q2.2
+            self.conv1 = nn.Conv2d(1, 8, kernel_size=3, stride=2, padding=1)
+            self.conv2 = nn.Conv2d(8, 16, kernel_size=3, stride=2, padding=0)
+
+        # An affine transformation with 320 output features
+        self.fc1 = nn.Linear(16*6*6, 320)
+        # An affine transformation with 120 output features
+        self.fc2 = nn.Linear(320, 120)
+        # An affine transformation with number of classes output features
+        self.fc3 = nn.Linear(120, 4)
+
+        self.dropout = nn.Dropout(p=dropout_prob)
         
-        # Implementation for Q2.1 and Q2.2
-        raise NotImplementedError
-        
-    def forward(self, x):
+    def forward(self, x, T=1.0):
         # input should be of shape [b, c, w, h]
-        # conv and relu layers
+        x = x.view(x.shape[0], 1, x.shape[1], x.shape[2])
+        # print("ori: ", x.shape)
 
-        # max-pool layer if using it
+        # images 28x28 =>
+        #      x.shape = [Batch_size, 1, 28, 28]
+        x = F.relu(self.conv1(x))
+        # Convolution with 3x3 filter, stride of 1, padding of 1 and 8 channels =>
+        #     x.shape = [Batch_size, 8, 28, 28], since 28 - 3 + 2*padding + 1 = 28
+        # Convolution with 3x3 filter, stride of 2, padding of 1 and 8 channels =>
+        #     x.shape = [Batch_size, 8, 28, 28], since (28 - 3 + 2*padding)/2 + 1 = 14
+        # print("relu1: ", x.shape)
         if not self.no_maxpool:
-            raise NotImplementedError
+            x = self.maxPool1(x)
+            # Max pooling with stride of 2 =>
+            #     x.shape = [Batch_size, 8, 14, 14], since (28 - 2)/2 + 1 = 14
+            # print("pool1: ", x.shape)
         
-        # conv and relu layers
+        x = F.relu(self.conv2(x))
+        # Convolution with 3x3 filter, stride of 1, padding of 0 and 16 channels =>
+        #     x.shape = [Batch_size, 16, 12, 12], since 12 = 14 - 3 + 1 >> maxpool
+        #     x.shape = [Batch_size, 16, 6, 6], since 6 = (14 - 3)/2 + 1 >> no_maxpool
+        # print("relu2: ", x.shape)
+        if not self.no_maxpool:
+            x = self.maxPool2(x)
+            # Max pooling with stride of 2 =>
+            #     x.shape = [Batch_size, 16, 6, 6], since (12 - 2)/2 + 1 = 6
+            # print("pool2: ", x.shape)
         
+        # print("flatten: ", x.shape)
 
-        # max-pool layer if using it
-        if not self.no_maxpool:
-            raise NotImplementedError
-        
+        x = x.view(-1, 16*6*6)
+        # print("view: ", x.shape)
+
         # prep for fully connected layer + relu
-        
+        x = F.relu(self.fc1(x))
+        # print("relu3: ", x.shape)
+
         # drop out
-        x = self.drop(x)
+        x = self.dropout(x)
 
         # second fully connected layer + relu
-        
+        x = F.relu(self.fc2(x))
+        # print("relu4: ", x.shape)
+
         # last fully connected layer
         x = self.fc3(x)
-        
-        return F.log_softmax(x,dim=1)
+        # print("fc3: ", x.shape)
+        #exit(0)
+        return F.log_softmax(x, dim=1)
 
 def train_batch(X, y, model, optimizer, criterion, **kwargs):
     """
@@ -68,6 +105,9 @@ def train_batch(X, y, model, optimizer, criterion, **kwargs):
     optimizer: optimizer used in gradient step
     criterion: loss function
     """
+    X = X.to(device)
+    y = y.to(device)
+    
     optimizer.zero_grad()
     out = model(X, **kwargs)
     loss = criterion(out, y)
@@ -88,6 +128,9 @@ def evaluate(model, X, y):
     X (n_examples x n_features)
     y (n_examples): gold labels
     """
+    X = X.to(device)
+    y = y.to(device)
+
     model.eval()
     y_hat = predict(model, X)
     n_correct = (y == y_hat).sum().item()
@@ -105,8 +148,9 @@ def plot(epochs, plottable, ylabel='', name=''):
 
 
 def get_number_trainable_params(model):
-    ## TO IMPLEMENT - REPLACE return 0
-    return 0
+    model_parameters = filter(lambda p: p.requires_grad, model.parameters())
+    params = sum([np.prod(p.size()) for p in model_parameters])
+    return params
 
 
 def main():
@@ -129,10 +173,10 @@ def main():
                         help="""The name which you want to name the generated image""")
     parser.add_argument('-no_maxpool', action='store_true')
 
+    opt = parser.parse_args()
+
     IMAGE_PATH = opt.image_path
     IMAGE_NAME = opt.image_name
-    
-    opt = parser.parse_args()
 
     utils.configure_seed(seed=42)
 
@@ -142,9 +186,8 @@ def main():
         dataset, batch_size=opt.batch_size, shuffle=True)
     dev_X, dev_y = dataset.dev_X, dataset.dev_y
     test_X, test_y = dataset.test_X, dataset.test_y
-
     # initialize the model
-    model = CNN(opt.dropout, no_maxpool=opt.no_maxpool)
+    model = CNN(opt.dropout, no_maxpool=opt.no_maxpool).to(device)
     
     # get an optimizer
     optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD}

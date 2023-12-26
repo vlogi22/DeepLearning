@@ -26,10 +26,10 @@ def load_oct_data(bias=False, eq_test_dist=False):
     Fashion-MNIST.npz, optionally adding a bias feature.
     """
     data = np.load('octmnist.npz')
-    train_X = data["train_images"].reshape([data["train_images"].shape[0], -1])/256
-    dev_X = data["val_images"].reshape([data["val_images"].shape[0], -1])/256
-    test_X = data["test_images"].reshape([data["test_images"].shape[0], -1])/256
-    
+    train_X = data["train_images"]/256
+    dev_X = data["val_images"]/256
+    test_X = data["test_images"]/256
+
     train_y = np.asarray(data["train_labels"]).squeeze()
     val_y = np.asarray(data["val_labels"]).squeeze()
     test_y = np.asarray(data["test_labels"]).squeeze()
