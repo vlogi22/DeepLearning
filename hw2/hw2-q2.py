@@ -18,8 +18,6 @@ import utils
 IMAGE_PATH = "./images"
 IMAGE_NAME = "new_image"
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
 class CNN(nn.Module):
     
     def __init__(self, dropout_prob, no_maxpool=False):
@@ -105,8 +103,6 @@ def train_batch(X, y, model, optimizer, criterion, **kwargs):
     optimizer: optimizer used in gradient step
     criterion: loss function
     """
-    X = X.to(device)
-    y = y.to(device)
     
     optimizer.zero_grad()
     out = model(X, **kwargs)
@@ -128,8 +124,6 @@ def evaluate(model, X, y):
     X (n_examples x n_features)
     y (n_examples): gold labels
     """
-    X = X.to(device)
-    y = y.to(device)
 
     model.eval()
     y_hat = predict(model, X)
@@ -187,7 +181,7 @@ def main():
     dev_X, dev_y = dataset.dev_X, dataset.dev_y
     test_X, test_y = dataset.test_X, dataset.test_y
     # initialize the model
-    model = CNN(opt.dropout, no_maxpool=opt.no_maxpool).to(device)
+    model = CNN(opt.dropout, no_maxpool=opt.no_maxpool)
     
     # get an optimizer
     optims = {"adam": torch.optim.Adam, "sgd": torch.optim.SGD}
